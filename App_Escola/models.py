@@ -30,6 +30,7 @@ class Professor(models.Model):
     
 class Turma(models.Model):
     nome_turma = models.CharField(max_length=120)
+    # FK: 
     id_professor = models.ForeignKey(Professor, null=True, on_delete=models.PROTECT)
 
     def __str__(self):
