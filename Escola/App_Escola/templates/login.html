@@ -1,39 +1,45 @@
-<html>
+{% load static %}
 
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-    <title> tela de Login </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
 
-    <link rel="stylesheet"  href="../static/css/login.css">
+    <link rel="stylesheet" href=" {%static 'css/login.css'%}">  
 </head>
-
 <body>
-    <div class="login-container">
-    <div class="error-message">
-        <!--Mensagem de erro sera inserida aqui-->
-    </div>
     <div class="login">
-       
-            <h1> Login</h1>
+        <h1>BEM-VINDO</h1>
+
             {% if messages %}
-            <ul class="mensagem_do_servidor">
-                {% for mensagem in messages %}
-                <li {% if mensagem.tags %}class="alert alert--{{message.tags}}" {% endif %}>{{mensagem}}</li>
-                {% endfor %}
-            </ul>
+                {% if mensagem.tags %} 
+                    <ul class="mensagem_do_servidor">
+                        {% for mensagem in messages %}
+                            <li class="alert alert-{{mensagem.tags}}"> {{mensagem}}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
             {% endif %}
-            <form action="{% url 'enviar_login' %}" method="post">{% csrf_token %}
-          <h3>Email:</h3>
-           <label for="e-mail"></label>
-           <input type="email" name="email" id="email" required><br>
 
-           <h3>Senha:</h3>
-           <label for="senha"></label>
-           <input type="password" name="senha" id="senha"><br><br>
+        <form action="{% url 'enviar_login' %}" method="POST">
+            {% csrf_token %}
+
+            <h4>E-mail:</h4>
+            <input id="email" type="email" name="email" placeholder="Insira seu E-mail" required>
             
-            <button type="submit">Entrar </button><br>
-        </form>
-    </div>
-</div>
-</body>
+            <h4>Senha:</h4>
+            <input id="senha" type="password" name="senha" placeholder="Insira sua senha" required>
+            
+            <div class="error-message">
+                <!-- Mensagem de erro será inserida aqui -->
+            </div>
 
+            <button id="item" type="submit">ENTRAR</button>
+        </form>
+
+    </div>
+</body>
 </html>

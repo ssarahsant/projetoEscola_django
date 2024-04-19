@@ -1,131 +1,174 @@
-/* Estilos para o corpo da página */
-* {
-    margin: 0px;
-    padding: 0px;
-}
+    /* Reset CSS para zerar margens e definir uma fonte padrão */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 0;
-    background-image: url('https://img.freepik.com/vetores-gratis/fundo-aquarela-abstrato-pintado-a-mao_23-2149018547.jpg?size=626&ext=jpg&ga=GA1.1.1448711260.1706400000&semt=ais');
-    background-size: cover;
-}
- 
-/* Estilos para o cabeçalho */
-header.login {
-    background-color: #240046;
-    color: #fff;
-    padding: 10px 0;
-    text-align: center;
-}
- 
-.nome_sistema {
-    font-size: 24px;
-}
- 
-/* Estilos para a barra de navegação */
-nav.menu {
-    background-color: #3C096C;
-    color: #fff;
-    padding: 10px 0;
-    text-align: center;
-}
- 
-.menu ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
- 
-.menu ul li {
-    display: inline;
-    margin-right: 10px;
-}
- 
-/* Estilos para o formulário */
-.principal {
-    margin: 50px auto;
-    width: 80%;
-    max-width: 600px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
- 
-.container {
-    padding: 20px;
-}
- 
-.enquadramento h1 {
-    margin: 0;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ccc;
-}
- 
-.form-content {
-    margin-bottom: 20px;
-}
- 
-.form-content input[type="text"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
- 
-.form-content a {
-    font-size: 12px;
-    color: #666;
-}
- 
-.botoes {
-    text-align: center;
-}
- 
-.botao_confirmar .btn_confirmar {
-    background-color:#240046;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
- 
-.botao_confirmar .btn_confirmar:hover {
-    background-color: #9D4EDD;
-}
- 
-/* Estilos para mensagens do servidor */
-.mensagem_do_servidor {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
- 
-.mensagem_do_servidor li {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-}
- 
-.alert-success {
-    background-color: #28a745;
-}
- 
-.alert-danger {
-    background-color: #dc3545;
-}
- 
-.alert-info {
-    background-color: #9D4EDD;;
-}
- 
+    body {
+        background-image: url('layered-peaks-haikei.svg');
+        background-size: cover;
+    }
+
+    /* Estilo da barra de navegação */
+    nav {
+        background-color: #22223b;
+        overflow: hidden;
+        padding: 10px;
+    }
+
+    /* Estilo do título na barra de navegação */
+    nav h2 {
+        color: #ffffff;
+        /* Texto branco */
+        float: left;
+        /* Alinha o título à esquerda dentro do elemento nav */
+        margin: 0;
+    }
+
+    /* Estilo dos botões na barra de navegação */
+    #login {
+        float: right;
+        /* Alinha os botões à direita dentro do elemento nav */
+        background-color: #ffffff;
+        /* Cor de fundo dos botões */
+        color: #22223b;
+        /* Cor do texto nos botões */
+        border: none;
+        padding: 5px 15px;
+        /* Espaçamento interno dos botões */
+        border-radius: 6px;
+        margin-top: 5px;
+        margin-left: 10px;
+        /* Espaçamento entre os botões */
+        cursor: pointer;
+        /* Altera o cursor para indicar que os botões são clicáveis */
+        text-decoration: none;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 75%;
+        /* Aumentando a largura da tabela para 95% */
+        margin: 50px auto;
+        /* Centraliza a tabela na página */
+        font-size: 18px;
+    }
+
+    button {
+        cursor: pointer;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+
+    #excluir {
+        background-color: #5b2a86;
+        color: white;
+        border: none;
+        padding: 7px;
+        border-radius: 6px;
+    }
 
 
+    #visualizar {
+        background-color: #468faf;
+        color: white;
+        border: none;
+        padding: 7px;
+        border-radius: 6px;
+    }
 
- 
+    #sair {
+        color: #22223b;
+        border: none;
+    }
+
+    #style_table th,
+    #style_table td {
+        border: 1px solid gainsboro;
+        text-align: center;
+        padding: 20px;
+    }
+
+    /* Estilo da div de cadastro */
+    .cadastro {
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        /* Alinha os itens verticalmente ao centro */
+        margin-top: 40px;
+        gap: 25px;
+        /* Espaça os itens da div de forma igual*/
+        padding-right: 150px;
+        padding-left: 150px;
+    }
+
+
+    .linha {
+        border-top: 2px solid #22223b;
+        width: 100%;
+    }
+
+    .sistema {
+        width: 60%;
+        /* Aumentando a largura da tabela */
+        margin: 50px auto;
+        /* Centraliza a tabela na página */
+        ;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+        padding: 1px;
+    }
+
+    /* CADASTRO TURMA */
+
+    h1,
+    h4 {
+        color: #231942;
+        margin-top: 30px;
+    }
+
+    .login #item {
+        align-items: center;
+    }
+
+    .error-message {
+        color: red;
+    }
+
+    .input-cadastro {
+        display: flex;
+        gap: 40px;
+        /* Espaçamento entre os inputs */
+    }
+
+    .input-turma {
+        flex: 1;
+        /* Ocupa todo o espaço disponível */
+    }
+
+    .input-turma h4 {
+        margin-bottom: 5px;
+        /* Ajuste opcional */
+    }
+
+    .input-turma input {
+        width: 100%;
+        /* Ocupa todo o espaço disponível no input-turma */
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid gainsboro;
+    }
+
+    #cadastro-button {
+        padding: 8px 16px;
+        /* Reduzindo o padding */
+        border-radius: 4px;
+        /* Ajustando o raio da borda */
+        background-color: #c9184a;
+        color: #ffffff;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+        margin-top: 50px;
+        height: 35px;
+    }

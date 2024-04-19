@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="../static/css/cadastro_atividade.css">  
+
+</head>
+
+
+<body>
+
+    <nav>
+        <h2>Cadastro de Atividades</h2>
+        <a href="login" id="login">Sair</a>
+    </nav>
+
+    <div class="sistema">
+
+        <div class="cadastro">
+            <h3>CADASTRE UMA ATIVIDADE PARA TURMA</h3>
+
+            <div class="linha"></div>
+
+            <div class="acoes">
+                <!-- ARRUMARRRRRRRRRRRRRRRRRRRRRRRRRRRR -->
+                <form action="{% url 'cad_atividade' %} method="post">
+                    <div class="input-cadastro">
+                        <div class="input-turma">
+                            <h4>Atvidade</h4>
+                            <input id="item" type="text" name="descricao" placeholder="Insira a descrição da atividade">
+                        </div>
+                        <button id="cadastro-button" type="submit">Cadastrar</button>
+                    </div>
+                    <div class="welcome-message">
+                        <!-- Mensagem de erro será inserida aqui -->
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <table id="style_table">
+
+            <tr>
+                <th> ATIVIDADE </th>
+                <th> AÇÃO </th>
+            </tr>
+
+            <tr>
+                
+                <td>
+                    <p> Digital Solutions 8</p>
+                </td>
+                <td> <button id="excluir" type="submit">Excluir</button>
+                    <button id="visualizar" type="submit">Visualizar</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p> Digital Solutions 9</p>
+                </td>
+                <td> <button id="excluir" type="submit">Excluir</button>
+                    <button id="visualizar" type="submit">Visualizar</button>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</body>
+
+</html>

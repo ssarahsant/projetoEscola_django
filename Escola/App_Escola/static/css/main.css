@@ -1,3 +1,4 @@
+
 :root{
     --cor_fundo : rgb(192, 163, 163);
     --cor_hover : rgb(150, 104, 104);
@@ -206,7 +207,7 @@ ul.messages {
 }
 ul.messages li {
    list-style: none;
-   /* border: */
+   border:
 }
 .form{
     /* faz a label e o campo afastar da borda u pouco */
@@ -302,3 +303,4 @@ div.rodape1 {
     padding: 25px;
     justify-content: center;
 }
+
