@@ -13,13 +13,12 @@
 <body>
 
     <nav>
-        <h2>Cadastro de Turmas</h2>
-        <a href="login" id="login">Sair</a>
+        <h2>Olá, {{ usuario_logado }} seja bem-vindo!</h2>
+        <a href="{% url 'fechar' %}" method="POST" id="login">Sair</a>
     </nav>
+    
 
     <div class="sistema">
-
-        <p> Olá  {{login}} seja bem-vindo! Percebemos que você é novo por aqui. Complete o seu cadastro.</p>
 
         <div class="cadastro">
             <h3>CADASTRE UMA TURMA</h3>
@@ -27,7 +26,6 @@
             <div class="linha"></div>
 
             <div class="acoes">
-                <!-- ARRUMAR -->
                 <form action="{% url 'cad_turma' id_professor=id_logado%}" method="POST">
                     {% csrf_token %}
                     <div class="input-cadastro">
@@ -46,31 +44,36 @@
 
         </div>
 
-        <table id="style_table">
+        {% if turmas_professor %}
 
-            <tr>
-                <th> ID </th>
-                <th> TURMA </th>
-                <th> AÇÃO </th>
-            </tr>
-
-            {% for turma in turmas_professor %}
+            <table id="style_table">
 
                 <tr>
-                    <td>
-                        <p> {{turma.id}}</p>
-                    </td>
-                    <td>
-                        <p> {{turma.nome_turma}}</p>
-                    </td>
-                    <td> <a href="{% url 'excluir_turma' id_turma=turma.id%}"><button id="excluir" type="submit">Excluir</button></a>
-                        <!-- ARRUMARRRRRRRRRRRRRRRRRRRRRRRRRRRR -->
-                        <button id="visualizar" type="submit">Visualizar</button>
-                    </td>
+                    <th> ID </th>
+                    <th> TURMA </th>
+                    <th> AÇÃO </th>
                 </tr>
-            {% endfor %}
 
-        </table>
+                {% for turma in turmas_professor %}
+
+                    <tr>
+                        <td>
+                            <p> {{turma.id}}</p>
+                        </td>
+                        <td>
+                            <p> {{turma.nome_turma}}</p>
+                        </td>
+                        <td> 
+                            <a href="{% url 'excluir_turma' id_turma=turma.id%}"><button id="excluir" type="submit">Excluir</button></a>
+                            <a href="{% url 'cad_atividade' id_turma=turma.id %}"><button id="visualizar" type="submit">Visualizar</button></a> 
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        {% else %}
+        <h3 style="text-align: center; padding: 50px 15px;">Não há turmas cadastradas!</h3>
+        {% endif %}
 
     </div>
 

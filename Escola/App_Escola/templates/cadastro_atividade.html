@@ -1,10 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <link rel="stylesheet" href="../static/css/cadastro_atividade.css">  
+    <link rel="stylesheet" href="{%static 'css/cadastro_atividade.css'%}">  
 
 </head>
 
@@ -12,9 +14,10 @@
 <body>
 
     <nav>
-        <h2>Cadastro de Atividades</h2>
-        <a href="login" id="login">Sair</a>
+        <h2>CADASTRO ATIVIDADES</h2>
+        <a href="{% url 'fechar' %}" method="POST" id="login">Sair</a>
     </nav>
+    
 
     <div class="sistema">
 
@@ -24,12 +27,13 @@
             <div class="linha"></div>
 
             <div class="acoes">
-                <!-- ARRUMARRRRRRRRRRRRRRRRRRRRRRRRRRRR -->
-                <form action="{% url 'cad_atividade' %} method="post">
+                <form action="{% url 'cad_atividade' id_turma=turma_id %}" method="POST">
+                    {% csrf_token %}
                     <div class="input-cadastro">
                         <div class="input-turma">
                             <h4>Atvidade</h4>
                             <input id="item" type="text" name="descricao" placeholder="Insira a descrição da atividade">
+                            <input type="hidden" name="id_turma" id="turma_id" value="{{turma_id}}">
                         </div>
                         <button id="cadastro-button" type="submit">Cadastrar</button>
                     </div>
@@ -41,33 +45,31 @@
 
         </div>
 
-        <table id="style_table">
+        {% if atividades_turma %}
 
-            <tr>
-                <th> ATIVIDADE </th>
-                <th> AÇÃO </th>
-            </tr>
+            <table id="style_table">
 
-            <tr>
-                
-                <td>
-                    <p> Digital Solutions 8</p>
-                </td>
-                <td> <button id="excluir" type="submit">Excluir</button>
-                    <button id="visualizar" type="submit">Visualizar</button>
-                </td>
-            </tr>
+                <tr>
+                    <th> ATIVIDADE </th>
+                    <th> AÇÃO </th>
+                </tr>
 
-            <tr>
-                <td>
-                    <p> Digital Solutions 9</p>
-                </td>
-                <td> <button id="excluir" type="submit">Excluir</button>
-                    <button id="visualizar" type="submit">Visualizar</button>
-                </td>
-            </tr>
+                {% for atividade in atividades_turma %}
 
-        </table>
+                    <tr>
+                        <td> {{atividade.id}}</td>
+
+                        <td>
+                            <p> {{atividade.nome_atividade}} </p>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+
+            </table>
+        {% else %}
+            <h3 style="text-align: center; padding: 50px 15px;">Não há atividades cadastradas!</h3>
+        {% endif %}
 
     </div>
 

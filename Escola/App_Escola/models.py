@@ -38,7 +38,7 @@ class Turma(models.Model):
     
 class Atividade(models.Model):
     nome_atividade = models.CharField(max_length=120)
-    id_professor = models.ForeignKey(Professor, null=True, on_delete=models.PROTECT)
+    id_turma = models.ForeignKey(Turma, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome_atividade

@@ -73,7 +73,9 @@ def abre_index(request):
         print("achei Obama")
     return render(request, 'login.html')
 
-# Função de Login
+
+#_____________________________________Cadastro de Professores_______________________________________
+
 def enviar_login(request):
     if (request.method == 'POST'):
         email = request.POST['email']
@@ -131,13 +133,14 @@ def confirmar_cadastro(request):
         )
         grava_professor.save()
 
-        mensagem = "OLÁ PROFESSOR " + nome + ", SEJA BEM-VINDO"
-        return HttpResponse(mensagem)
+        return HttpResponseRedirect(reverse('enviar_login'))
+
+
+#______________________________________Cadatro de Turmas_______________________________________
 
 # Função para Cadastrar Turma
 def cad_turma(request, id_professor):
     if request.method == 'POST':
-        print("entrei no post")
         turma = request.POST["turma"]
         professor = Professor.objects.get(id=id_professor)
 
@@ -161,25 +164,8 @@ def cad_turma(request, id_professor):
         "turmas_professor": turmas_professor
     }),
 
-    
 
-# Função para Salvar Novas Turmas
-def salvar_turma_nova(request):
-    if (request.method == 'POST'):
-        nome_turma = request.POSTT.get('nova_turma')
-        id_professor = request.POST.get('id_professor')
-        professor = Professor.objects.get(id=id_professor)
-        grava_turma = Turma (
-            nome_turma=nome_turma,
-            id_professor=id_professor
-        )
-        grava_turma.save()
-        messages.info(request, 'Turma' + nome_turma + 'cadastrado com sucesso')
-
-        # Redireciona para uma nova URL após a gravação bem sucedida
-        return redirect('lista_turma', id_professor=id_professor)
-
-# Função
+# Função que carrega as turmas já adastrada na tela
 def lista_turma(request, id_professor):
     dados_professor = Professor.objects.filter(id=id_professor).values("nome", "id")
     usuario_logado = dados_professor[0]
@@ -206,20 +192,82 @@ def excluir_turma(request, id_turma):
             "id_logado": id_professor
         })
     except Turma.DoesNotExist:
-        # Trate aqui o caso em que a turma não existe
-        # Por exemplo, redirecione o usuário para uma página de erro
         pass
 
+#______________________________________Cadastro de Atividades_______________________________________
+
 def cad_atividade(request, id_turma):
+    turma = Turma.objects.get(pk=id_turma)
+    atividades_turma = Atividade.objects.filter(id_turma_id=id_turma)
+    # se o metodo for post ()
     if request.method == 'POST':
         descricao = request.POST["descricao"]
         turma = Turma.objects.get(pk=id_turma)
 
+        # atomicidade, executa somente se der tudo certo
         with transaction.atomic():
             grava_atividade = Atividade(nome_atividade=descricao, id_turma=turma)
             grava_atividade.save()
+
+        atividades_turma = Atividade.objects.filter(id_turma_id = id_turma)
             
-        return HttpResponseRedirect(reverse("cad_atividade", args=[id_turma]))
+        return render(request, "cadastro_atividade.html", {
+            # contexto passado para o html
+            "turma_id": id_turma,
+            "atividades_turma": atividades_turma
+        })
     return render(request, 'cadastro_atividade.html', {
-        "turma_id": id_turma
+        "turma_id": id_turma,
+        "atividades_turma": atividades_turma
     })
+
+def fechar(request):
+    return render(request, "login.html")
+#______________________________________________________________________________________________
+
+# def lista_Atividade(request, id_turma):
+#     dados_professor = Professor.objects.filter(id=id_professor).values("nome", "id")
+#     usuario_logado = dados_professor[0]
+#     usuario_logado = usuario_logado['nome']
+#     id_logado = dados_professor[0]
+#     id_logado = id_logado['id']
+#     turmas_do_professor = Turma.objects.filter(id_professor=id_logado)
+#     return render(request, 'Const_Turma_Lista.html', 
+#                  {'usuario_logado': usuario_logado, 'tumas_do_professor':turmas_do_professor,
+#                   'id_logado': id_logado} )
+
+# def excluir_atividde(request, id_turma):
+#     try:
+#         with transaction.atomic():
+#             atividade = Atividade.objects.get(pk=id_turma)
+#             id_turma = atividade.id_turma_id
+#             atividade.delete()
+
+#             turma = Turma.objects.get(pk=id_atividade)
+#             atividades_turma = Atividade.objects.filter(id_turma_id=id_turma)
+
+#         return render(request, "cadastro_turma.html", {
+#             "turmas_professor": turmas_professor,
+#             "id_logado": id_professor
+#         })
+#     except Turma.DoesNotExist:
+#         # Trate aqui o caso em que a turma não existe
+#         # Por exemplo, redirecione o usuário para uma página de erro
+#         pass
+
+
+# Função para Salvar Novas Turmas
+# def salvar_turma_nova(request):
+#     if (request.method == 'POST'):
+#         nome_turma = request.POSTT.get('nova_turma')
+#         id_professor = request.POST.get('id_professor')
+#         professor = Professor.objects.get(id=id_professor)
+#         grava_turma = Turma (
+#             nome_turma=nome_turma,
+#             id_professor=id_professor
+#         )
+#         grava_turma.save()
+#         messages.info(request, 'Turma' + nome_turma + 'cadastrado com sucesso')
+
+#         # Redireciona para uma nova URL após a gravação bem sucedida
+#         return redirect('lista_turma', id_professor=id_professor)
