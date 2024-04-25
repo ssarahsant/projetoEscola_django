@@ -7,6 +7,8 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" href="{%static 'css/cadastro_atividade.css'%}">  
+    <script src="https://kit.fontawesome.com/cf0f7af951.js" crossorigin="anonymous"></script>
+    
 
 </head>
 
@@ -25,24 +27,24 @@
             <h3>CADASTRE UMA ATIVIDADE PARA TURMA</h3>
 
             <div class="linha"></div>
-
-            <div class="acoes">
-                <form action="{% url 'cad_atividade' id_turma=turma_id %}" method="POST">
+                <form enctype="multipart/form-data" action="{% url 'cad_atividade' id_turma=turma_id %}" method="POST">
                     {% csrf_token %}
                     <div class="input-cadastro">
                         <div class="input-turma">
                             <h4>Atvidade</h4>
                             <input id="item" type="text" name="descricao" placeholder="Insira a descrição da atividade">
-                            <input type="hidden" name="id_turma" id="turma_id" value="{{turma_id}}">
+                        </div>
+                            <div class="acoes">
+                                <h4>Arquivo</h4>
+                                <input type="file" name="arquivo" id="arquivo" value="Caminho arquivo">    
                         </div>
                         <button id="cadastro-button" type="submit">Cadastrar</button>
                     </div>
+                    <input type="hidden" name="id_turma" id="turma_id" value="{{turma_id}}">
                     <div class="welcome-message">
                         <!-- Mensagem de erro será inserida aqui -->
                     </div>
                 </form>
-            </div>
-
         </div>
 
         {% if atividades_turma %}
@@ -52,6 +54,7 @@
                 <tr>
                     <th> ATIVIDADE </th>
                     <th> AÇÃO </th>
+                    <th> ARQUIVO </th>
                 </tr>
 
                 {% for atividade in atividades_turma %}
@@ -61,6 +64,14 @@
 
                         <td>
                             <p> {{atividade.nome_atividade}} </p>
+                        </td>
+
+                        <td>
+                            {% if atividade.arquivo %}
+                            <i class="fa-regular fa-file"></i>
+                            {% else %}
+                            <i class="fa-solid fa-x"></i>
+                            {% endif %}
                         </td>
 
                     </tr>

@@ -105,8 +105,9 @@ def enviar_login(request):
                 })
             
             else:
-                messages.info(request, 'Uusário ou senha incorreta. Tente novamente.')
-                return render(request, 'login.html')
+                return render(request, "login.html", {
+                    "error_message": "Usuário ou senha incorretos. Tente novamente!"
+                })
             
         
         # messages.info(request, "Olá " + email + ", seja bem-vindo! Percebemos que você é novo por aqui. Complete o seu cadastro.")
@@ -199,6 +200,7 @@ def excluir_turma(request, id_turma):
 def cad_atividade(request, id_turma):
     turma = Turma.objects.get(pk=id_turma)
     atividades_turma = Atividade.objects.filter(id_turma_id=id_turma)
+    arquivo = request.FILES.get('arquivo')
     # se o metodo for post ()
     if request.method == 'POST':
         descricao = request.POST["descricao"]
@@ -206,7 +208,10 @@ def cad_atividade(request, id_turma):
 
         # atomicidade, executa somente se der tudo certo
         with transaction.atomic():
-            grava_atividade = Atividade(nome_atividade=descricao, id_turma=turma)
+            grava_atividade = Atividade(
+                nome_atividade=descricao, id_turma=turma,
+                arquivo = arquivo  # acho que é aqui
+        )
             grava_atividade.save()
 
         atividades_turma = Atividade.objects.filter(id_turma_id = id_turma)
