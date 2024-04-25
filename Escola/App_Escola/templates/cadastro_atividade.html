@@ -61,16 +61,17 @@
 
                     <tr>
                         <td> {{atividade.id}}</td>
-
                         <td>
                             <p> {{atividade.nome_atividade}} </p>
                         </td>
 
                         <td>
                             {% if atividade.arquivo %}
-                            <i class="fa-regular fa-file"></i>
+                            <a href="../../{{atividade.arquivo}}"><p>arquivo</p></a></td>
+                            <!-- <a href={{atividade.arquivo}}><i class="fa-regular fa-file"></i></a></td> -->
                             {% else %}
-                            <i class="fa-solid fa-x"></i>
+                            <!-- <i class="fa-solid fa-x"></i> -->
+                            <p>não existe arquivo</p>
                             {% endif %}
                         </td>
 

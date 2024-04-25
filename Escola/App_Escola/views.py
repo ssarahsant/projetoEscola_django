@@ -6,6 +6,8 @@ from .models import Professor, Turma, Atividade
 from django.db import connection, transaction
 from django.contrib import messages # biblioteca de mensagens do django
 from django.http import HttpResponse, HttpResponseRedirect
+import os
+import mimetypes
 
 # Cria todas as funções
 # Função de popular as Tabelas do Banco de Dados
@@ -228,6 +230,22 @@ def cad_atividade(request, id_turma):
 
 def fechar(request):
     return render(request, "login.html")
+
+# Função que Apresenta o arquivo da Atividade
+def exibir_arquivo(resquest, nome_arquivo):
+    caminho_arquivo = os.path.join('atividade_arquivos/', nome_arquivo)
+
+    if os.path.exists(caminho_arquivo):
+        with open(caminho_arquivo, 'rb') as arquivo:
+            conteudo = arquivo.read()
+        
+        tipo_mimetype, _ = mimetypes.guess_type(caminho_arquivo)
+        resposta = HttpResponse(conteudo, content_type=tipo_mimetype)
+        resposta['Content-Disposition'] = 'inline; filename"' + nome_arquivo + '"'
+        return resposta
+
+    else:
+        return HttpResponse('Arquivo não encontrado', status=404)
 #______________________________________________________________________________________________
 
 # def lista_Atividade(request, id_turma):
