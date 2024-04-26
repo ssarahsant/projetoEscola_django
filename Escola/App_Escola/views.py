@@ -2,12 +2,16 @@ from django.shortcuts import render, redirect
 from hashlib import sha256
 
 from django.urls import reverse
-from .models import Professor, Turma, Atividade
 from django.db import connection, transaction
 from django.contrib import messages # biblioteca de mensagens do django
 from django.http import HttpResponse, HttpResponseRedirect
 import os
 import mimetypes
+import openpyxl
+from .models import Professor
+from .models import Turma
+from .models import Atividade
+
 
 # Cria todas as funções
 # Função de popular as Tabelas do Banco de Dados
@@ -246,51 +250,57 @@ def exibir_arquivo(resquest, nome_arquivo):
 
     else:
         return HttpResponse('Arquivo não encontrado', status=404)
-#______________________________________________________________________________________________
+    
+#_______________________________________INFORMAÇÕES DO BANCO DE DADOS______________________________________
 
-# def lista_Atividade(request, id_turma):
-#     dados_professor = Professor.objects.filter(id=id_professor).values("nome", "id")
-#     usuario_logado = dados_professor[0]
-#     usuario_logado = usuario_logado['nome']
-#     id_logado = dados_professor[0]
-#     id_logado = id_logado['id']
-#     turmas_do_professor = Turma.objects.filter(id_professor=id_logado)
-#     return render(request, 'Const_Turma_Lista.html', 
-#                  {'usuario_logado': usuario_logado, 'tumas_do_professor':turmas_do_professor,
-#                   'id_logado': id_logado} )
+# Função que apresenta as informações vinda do banco de dados referente a turmas
+def exportar_para_excel_turmas(request):
+    # Consulta para obter os dados que deseja exportar
+    dados_turmas = Turma.objects.all()
 
-# def excluir_atividde(request, id_turma):
-#     try:
-#         with transaction.atomic():
-#             atividade = Atividade.objects.get(pk=id_turma)
-#             id_turma = atividade.id_turma_id
-#             atividade.delete()
+    # Criando um novo arquivo Excel
+    workbook = openpyxl.Workbook()
+    sheet = workbook.active
+    sheet.title = "Turmas"
 
-#             turma = Turma.objects.get(pk=id_atividade)
-#             atividades_turma = Atividade.objects.filter(id_turma_id=id_turma)
+    # Escrevendo cabeçalhos
+    sheet['A1'] = "ID"
+    sheet['B1'] = "Nome da Turma"
 
-#         return render(request, "cadastro_turma.html", {
-#             "turmas_professor": turmas_professor,
-#             "id_logado": id_professor
-#         })
-#     except Turma.DoesNotExist:
-#         # Trate aqui o caso em que a turma não existe
-#         # Por exemplo, redirecione o usuário para uma página de erro
-#         pass
+    # Escrevendo dados
+    for index, turma in enumerate(dados_turmas, start=2):
+        sheet[f'A{index}'] = turma.id
+        sheet[f'B{index}'] = turma.nome_turma
 
+    # Salvando o arquivo Excel
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=turma.xlsx'
+    workbook.save(response)
+    return response
 
-# Função para Salvar Novas Turmas
-# def salvar_turma_nova(request):
-#     if (request.method == 'POST'):
-#         nome_turma = request.POSTT.get('nova_turma')
-#         id_professor = request.POST.get('id_professor')
-#         professor = Professor.objects.get(id=id_professor)
-#         grava_turma = Turma (
-#             nome_turma=nome_turma,
-#             id_professor=id_professor
-#         )
-#         grava_turma.save()
-#         messages.info(request, 'Turma' + nome_turma + 'cadastrado com sucesso')
+# Função que apresenta as informações vinda do banco de dados referente a turmas
+def exportar_para_excel_atividades(request):
+    # Consulta para obter os dados que deseja exportar
+    dados_atividades = Atividade.objects.all()
 
-#         # Redireciona para uma nova URL após a gravação bem sucedida
-#         return redirect('lista_turma', id_professor=id_professor)
+    # Criando um novo arquivo Excel
+    workbook = openpyxl.Workbook()
+    sheet = workbook.active
+    sheet.title = "Atividades"
+
+    # Escrevendo cabeçalhos
+    sheet['A1'] = "ID"
+    sheet['B1'] = "Nome da Atividade"
+    sheet['C1'] = "tURMA"
+
+    # Escrevendo dados
+    for index, atividade in enumerate(dados_atividades, start=2):
+        sheet[f'A{index}'] = atividade.id
+        sheet[f'B{index}'] = atividade.nome_atividade
+        sheet[f'C{index}'] = atividade.id_turma.nome_turma  # Ajuste aqui
+
+    # Salvando o arquivo Excel
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=atividades.xlsx'
+    workbook.save(response)
+    return response

@@ -11,7 +11,7 @@ urlpatterns = [
     path('lista_turma/<int:id_professor>',views.lista_turma, name='lista_turma'),
     path('excluir_turma/<int:id_turma>', views.excluir_turma, name='excluir_turma'),
     path('cad_atividade/<int:id_turma>', views.cad_atividade, name='cad_atividade'),
-    path('atividade_arquivos/<str:nome_arquivo>', views.exibir_arquivo, name='exibir_arquivo')
-    # path("salvar_turma', views.salvar_turma_nova, name='salvar_turma_nova'),
-    # path("lista_atividade/<int:id_atividade>", views.lista_atividade, name:"lista_atividade")
+    path('atividade_arquivos/<str:nome_arquivo>', views.exibir_arquivo, name='exibir_arquivo'),
+    path('exportar_para_excel_turmas', views.exportar_para_excel_turmas, name='exportar_para_excel_turmas'),
+    path('exportar_para_excel_atividades', views.exportar_para_excel_atividades, name='exportar_para_excel_atividades')
 ]

@@ -75,6 +75,11 @@
         <h3 style="text-align: center; padding: 50px 15px;">Não há turmas cadastradas!</h3>
         {% endif %}
 
+
+        <a href="{% url 'exportar_para_excel_turmas' %}" download>
+            <button class="banco-turma">Clique aqui para acessar as informações de todas suas turmas</button>
+        </a>
+
     </div>
 
 </body>
