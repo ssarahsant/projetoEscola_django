@@ -22,6 +22,9 @@
 
         <div class="cadastro">
             <h3>CADASTRE UMA TURMA</h3>
+            <a href="{% url 'exportar_para_excel_turmas' %}" download>
+                <button style="text-decoration: none; color: #fff; background-color: #22223b; padding: 8px 16px; border: none; border-radius: 4px;">Exportar para Excel</button>
+            </a>
 
             <div class="linha"></div>
 
@@ -76,9 +79,7 @@
         {% endif %}
 
 
-        <a href="{% url 'exportar_para_excel_turmas' %}" download>
-            <button class="banco-turma">Clique aqui para acessar as informações de todas suas turmas</button>
-        </a>
+        
 
     </div>
 

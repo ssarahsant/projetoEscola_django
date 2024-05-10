@@ -12,7 +12,7 @@ body {
 }
 
 /* Estilo da barra de navegação */
-nav {
+nav { 
     background-color: #22223b;
     overflow: hidden;
     padding: 10px;

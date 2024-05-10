@@ -21,4 +21,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('App_Escola.urls')),
+    # permite gerenciar quem está logado ou não
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('usuaios/', include('App_User.urls'))
 ]

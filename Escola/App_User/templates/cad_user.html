@@ -1,0 +1,85 @@
+[15:43] FERNANDA MILITAO DA SILVA FRETES
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/cad_user.css' %}">
+    <title>Programação Web Back End</title>
+</head>
+<header class="login">
+    <div class="fundo_menu">
+        <div class="nome_sistema">
+             Programação Web Back End<br>
+             Sistema de Apoio aos Professores  - Final Sprint 2
+        </div>
+    </div>
+</header>
+
+<nav class="menu">
+    {% if user.is_authenticated %}
+    <ul>
+        <li><a href="">Cadastros</a>
+            <ul>
+                <li><a href="">Professores</a></li>
+                <li><a href="">Turmas</a></li>
+                <li><a href="">Atividades</a></li>
+            </ul>
+        </li>
+        <li><a href="">Registrar Turmas do Professor</a></li>
+        <li><a href="">Registrar Atividades da Turma</a></li>
+        <li> | Usuário logado: {{usuario_logado}}</a></li>
+    </ul>
+    {% endif %}
+</nav>
+
+<body>
+    <div class="principal">
+    <div class="container">
+        <section class="enquadramento">
+            <h1> Cadastro de Usuários</h1>
+        </section>
+        {% if messages %}
+            <ul class="mensagem_do_servidor" style="background: #7d7f81; padding: 24px; text-align:center; color: #fff;">
+                {% for mensagem in messages %}
+                   <li style="list-style: none;" {% if mensagem.tags %}class="alert alert-{{message.tags}}"{% endif %}>{{mensagem}}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <form id="form" class="form" method="POST" action="{% url 'salva_usuario' %}">{% csrf_token %}
+                <div class="form-content">
+                    <label>Usuario</label>
+                    <input type="text" id="usuario" name="usuario"placeholder="Digite o nome do Cliente" />
+                    <a>Nome deve ter no mínimo 3 caracteres</a>
+                </div>
+                <div class="form-content">
+                    <label>Email</label>
+                    <input type="email" id="email" name="email" placeholder="Digite o email do Cliente"  />
+                    <a>Digite um endereço de email válido</a>
+                </div>
+                <div class="form-content">
+                    <label>Senha</label>
+                    <input type="text" id="senha" name="senha"/>
+                </div>
+                <div class="botoes">
+                    <div class="botao_confirmar">
+                        <button type="submit" class="btn_conf_cancel btn_confirmar">Confirmar</button>
+                    </div>
+                </div>
+        </form>
+
+    </div>
+    </div>
+</body>
+
+<script src="./js/script.js"></script>
+
+<footer class="rodape">
+    <div class="fundo_menu">
+        <div class="rodape1">
+            Escola e Faculdade de Tecnologia Senai "Roberto Mange"<br>
+            Curso de Análise e Desenvolvimento de Sistemas.<br>
+        </div>
+
+    </div>
+</footer>
+</html>

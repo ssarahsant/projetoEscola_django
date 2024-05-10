@@ -65,7 +65,6 @@ def initial_population():
 
 # AP FAZER UM INSERT NO BANCO DE DADOS o insert COMMIT para garvar os dados permanet=netemnete no banco de dado fisico. - grava no banco de dados fisicos
 # rowback - quando está em um insert longo, caso ocorra uma incosistencia (se der um erro ou algum parametro esteja incorrespondnetes), todo o insert é deixado de garvar - não faz a gravação dos dados se ocorrer algum erro 
-
 def abre_index(request):
     #return render(request, 'login.html')
     dado_pesquisa = 'Obama'
@@ -77,7 +76,12 @@ def abre_index(request):
         initial_population()
     else:
         print("achei Obama")
-    return render(request, 'login.html')
+
+    # renderiza a página de login para informaar se o usuário está logado ou não 
+    usuario_logado = request.user.username
+    return render(request, 'index.html', {
+        'usuario_logado': usuario_logado
+    })
 
 
 #_____________________________________Cadastro de Professores_______________________________________
@@ -111,7 +115,7 @@ def enviar_login(request):
                 })
             
             else:
-                return render(request, "login.html", {
+                return render(request, "registration/login.html", {
                     "error_message": "Usuário ou senha incorretos. Tente novamente!"
                 })
             
@@ -122,7 +126,7 @@ def enviar_login(request):
             'login': email
         })
     
-    return render(request, "login.html")
+    return render(request, "registration/login.html")
     
 
 # Função Cadastro
@@ -233,7 +237,7 @@ def cad_atividade(request, id_turma):
     })
 
 def fechar(request):
-    return render(request, "login.html")
+    return render(request, "registration/login.html")
 
 # Função que Apresenta o arquivo da Atividade
 def exibir_arquivo(resquest, nome_arquivo):
